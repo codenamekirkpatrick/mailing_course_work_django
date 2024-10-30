@@ -1,1 +1,1 @@
-# mailing_course_work_django
+Курсовая 6. Основы веб-разработки на Django
