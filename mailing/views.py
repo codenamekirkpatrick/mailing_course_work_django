@@ -20,6 +20,7 @@ class MailingUpdateView(UpdateView):
     form_class = MailingForm
     success_url = reverse_lazy('mailing:mailing_list', )
 
+
 class MailingDeleteView(DeleteView):
     model = Mailing
     success_url = reverse_lazy('mailing:mailing_list')
@@ -27,7 +28,6 @@ class MailingDeleteView(DeleteView):
 
 class MailingDetailView(DetailView):
     model = Mailing
-
 
 
 class MessageListView(ListView):
@@ -66,7 +66,6 @@ class MessageUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('mailing:message_detail', args=[self.kwargs.get('pk')])
-
 
 
 class MessageDeleteView(DeleteView):
