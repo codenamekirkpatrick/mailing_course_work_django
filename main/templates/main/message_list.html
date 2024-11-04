@@ -1,0 +1,49 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="col-12">
+            <div class="row">
+                <!-- Кнопка "Добавить" -->
+                <div class="col-1 d-flex justify-content-start">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'main:message_create' %}" class="btn btn-primary my-2">Добавить сообщение</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Список клиентов -->
+        <div class="row">
+            {% for message in object_list %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5><small>Тема: </small>{{ message.subject }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Текст: {{ message.body }}
+                        </li>
+                        <li class="list-group-item">
+                            Автор: {{ message.owner }}
+                        </li>
+                        <li class="list-group-item">
+                            {% if user.is_superuser or message.owner == request.user %}
+                            <div class="btn-group text-center">
+                                <a href="{% url 'main:message_update' message.pk %}" class="btn btn-primary my-2">Изменить</a>
+                                <a href="{% url 'main:message_delete' message.pk %}" class="btn btn-primary my-2">Удалить</a>
+                            </div>
+                            {% else %}
+                            <h6 class="text-secondary text-center">У вас нет права редактировать или удалять
+                                сообщения созданные другими пользователями.</h6>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

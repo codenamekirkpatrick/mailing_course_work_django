@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+{% load my_tags %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <!-- Секция с информацией о рассылках -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Количество рассылок</th>
+            <th scope="col">Количество активных рассылок</th>
+            <th scope="col">Количество уникальных клиентов</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ total_mailings }}</td>
+            <td>{{ active_mailings }}</td>
+            <td>{{ unique_clients }}</td>
+        </tr>
+    </table>
+
+
+    <!-- Секция с тремя случайными статьями -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="mb-4">Случайные статьи из блога</h3>
+        </div>
+        {% for blogpost in random_blogs %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-img-top">
+                    {% if blogpost.image %}
+                    <img class="card-img-top" src="{{ blogpost.image | media_filter }}" alt="Изображение статьи"
+                         style="width: 100px; height: 100px; object-fit: cover;">
+                    {% else %}
+                    <img class="card-img-top" src="{% static 'media_default/blog_img.png' %}"
+                         alt="Изображение по умолчанию"
+                         style="width: 100px; height: 100px; object-fit: cover;">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ blogpost.title | truncatechars:45 }}</h5>
+                    <p class="card-text">{{ blogpost.content | truncatechars:100 }}</p>
+                    <a href="{% url 'blog:blog_detail' blogpost.pk %}" class="btn btn-primary">Читать далее</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="col-12">
+            <div class="row">
+                <section class="text-center container">
+                    <p>
+                        <a href="{% url 'main:client_create' %}" class="btn btn-primary my-2">Добавить
+                            клиента</a>
+                    </p>
+                    <!-- Список клиентов -->
+                    <div class="row">
+                        {% for client in object_list %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5><small>Клиент: </small>{{ client.last_name }} {{ client.first_name }}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        Email: {{ client.email }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Комментарий: {{ client.comment }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        Добавлен пользователем: {{ client.user }}
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="{% url 'main:client_update' client.pk %}" class="btn btn-primary my-2">Изменить
+                                        </a>
+                                        <a href="{% url 'main:client_delete' client.pk %}" class="btn btn-primary my-2">Удалить
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

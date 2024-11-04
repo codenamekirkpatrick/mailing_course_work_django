@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row">
+            {% for user in object_list %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5><small>Активность: </small>{{ user.is_active }}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Email: {{ user.email }}
+                        </li>
+                        <li class="list-group-item">
+                            Телефон: {{ user.phone }}
+                        </li>
+                        <li class="list-group-item">
+                            <div class="btn-group text-center">
+                                <a href="{% url 'users:user_update' user.pk %}"
+                                   class="btn btn-primary my-2">Изменить</a>
+                                <a href="{% url 'main:client_delete' user.pk %}"
+                                   class="btn btn-primary my-2">Удалить</a>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
