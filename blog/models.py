@@ -1,23 +1,33 @@
 from django.db import models
+from django.utils import timezone
 
-from mailing.models import NULLABLE
+from main.utils import NULLABLE
+from users.models import User
 
 
 class Blog(models.Model):
-    """ Класс для модели Попытки """
-    title = models.CharField(max_length=50 ,verbose_name="Заголовок", help_text="Придумайте заголовок", default='Заголовок', **NULLABLE)
-    post = models.TextField(verbose_name="Статья", help_text="Введите текс", default='Тут должен быть текст новой статьи')
-    image = models.ImageField(upload_to="blog/", verbose_name="Фото", **NULLABLE, help_text="Загрузите фото")
-    views_count = models.PositiveIntegerField(default=0, verbose_name="Количество просмотров")
-    created_at = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    updated_at = models.DateTimeField(verbose_name="Дата изменения рассылки", auto_now=True)
-    is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
-
-    def __str__(self):
-        """ Строковое представление данных """
-        return f"{self.title}"
+    title = models.CharField(max_length=250, verbose_name="Заголовок")
+    content = models.TextField(verbose_name="Содержание")
+    image = models.ImageField(
+        upload_to="blog_images/", **NULLABLE, verbose_name="Изображение"
+    )
+    views = models.PositiveIntegerField(default=0)
+    publish_date = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+    )
 
     class Meta:
-        verbose_name = "Статья"
-        verbose_name_plural = "Статьи"
-        ordering = ("title",)
+        verbose_name = "Блог"
+        verbose_name_plural = "Блоги"
+        ordering = ["-publish_date"]
+        permissions = [
+            ("can_create_blogpost", "can create blogpost"),
+            ("can_update_blogpost", "can update blogpost"),
+            ("can_delete_blogpost", "can delete blogpost"),
+        ]
+
+    def __str__(self):
+        return self.title
