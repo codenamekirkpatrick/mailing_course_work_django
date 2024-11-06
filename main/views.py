@@ -281,6 +281,7 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
         return super().form_valid(form)
 
 
-class TryMailingListView(ListView):
-    model = TryMailing
-    extra_context = {'title': 'Попытки'}
+
+def mailing_status(request):
+    mailings = TryMailing.objects.prefetch_related('status').all()
+    return render(request, 'main/mailing_status.html', {'mailings': mailings})
