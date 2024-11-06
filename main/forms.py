@@ -108,7 +108,6 @@ class MailingForm(forms.ModelForm):
             "end_date",
             "interval",
             "is_active",
-            "status",
         ]
         widgets = {
             "clients": forms.CheckboxSelectMultiple(),

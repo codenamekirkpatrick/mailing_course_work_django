@@ -280,15 +280,6 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
         cache.clear()
         return super().form_valid(form)
 
-class TryMailingDetailView(DetailView):
-    model = TryMailing
-    permission_required = 'main.view_attempt'
-
-    def get_success_url(self):
-        object_id = self.object.pk
-        detail_url = reverse_lazy('main:mailing_list', kwargs={'pk': object_id})
-        return detail_url
-
 
 class TryMailingListView(ListView):
     model = TryMailing
