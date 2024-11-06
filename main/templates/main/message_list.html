@@ -5,12 +5,15 @@
     <div class="container">
         <div class="col-12">
             <div class="row">
-                <!-- Кнопка "Добавить" -->
-                <div class="col-1 d-flex justify-content-start">
+
+                <div class="col-12 d-flex justify-content-start">
                     {% if user.is_authenticated %}
-                    <a href="{% url 'main:message_create' %}" class="btn btn-primary my-2">Добавить сообщение</a>
+                    <section class="text-center container">
+                        <a href="{% url 'main:message_create' %}" class="btn btn-primary my-2">Добавить сообщение</a>
+                    </section>
                     {% endif %}
                 </div>
+
             </div>
         </div>
         <!-- Список клиентов -->
