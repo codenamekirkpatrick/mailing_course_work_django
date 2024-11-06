@@ -4,13 +4,13 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.timezone import now
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.core.cache import cache
 
 from blog.models import Blog
 from blog.services import get_blogs_from_cache
 from main.forms import ClientForm, MessageForm, MailingForm, ManagerMailingForm
-from main.models import Client, Message, Mailing
+from main.models import Client, Message, Mailing, TryMailing
 
 from random import sample
 
@@ -279,3 +279,17 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
     def form_valid(self, form):
         cache.clear()
         return super().form_valid(form)
+
+class TryMailingDetailView(DetailView):
+    model = TryMailing
+    permission_required = 'main.view_attempt'
+
+    def get_success_url(self):
+        object_id = self.object.pk
+        detail_url = reverse_lazy('main:mailing_list', kwargs={'pk': object_id})
+        return detail_url
+
+
+class TryMailingListView(ListView):
+    model = TryMailing
+    extra_context = {'title': 'Попытки'}

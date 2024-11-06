@@ -108,6 +108,7 @@ class MailingForm(forms.ModelForm):
             "end_date",
             "interval",
             "is_active",
+            "status",
         ]
         widgets = {
             "clients": forms.CheckboxSelectMultiple(),
@@ -146,7 +147,7 @@ class MailingForm(forms.ModelForm):
 class ManagerMailingForm(forms.ModelForm):
     class Meta:
         model = Mailing
-        fields = ["is_active"]
+        fields = ["is_active",]
 
         widgets = {
             "is_active": forms.CheckboxInput(attrs={"class": "form-check-input"}),

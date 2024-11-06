@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<section class="text-center container">
+    <div class="col-lg-12 col-md-9 col-sm-12">
+        <h2>Статус отправки</h2>
+        <div class="card mb-4 box-shadow">
+            <div class="card-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td class="w-25">Дата последней попытки</td>
+                        {% if object.last_try %}
+                        <td>{{ object.last_try }}</td>
+                        {% else%}
+                        <td>Отправки не было</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td class="w-25">Статус последней попытки</td>
+                        {% if object.status %}
+                        <td>Успешно</td>
+                        {% else%}
+                        <td>Не успешно</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td class="w-25">Ответ последней попытки</td>
+                        {% if object.response %}
+                        <td>{{ object.response }}</td>
+                        {% else%}
+                        <td>Нет ответа</td>
+                        {% endif %}
+                    </tr>
+                </table>
+                <a href="{% url 'main:mailing_list'  %}" class="btn btn-lg btn-block btn-outline-primary">Назад</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

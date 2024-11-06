@@ -12,7 +12,7 @@
                     <div class="col-1 d-flex justify-content-start">
                         <section class="text-center container">
                     <p>
-                        <a href="{% url 'main:mailing_create' %}" class="btn btn-primary my-2">Добавить рассылку</a>
+                        <a href="{% url 'main:mailing_create' %}" class="btn btn-lg btn-block btn-outline-primary">Добавить рассылку</a>
                     </p>
 
 
@@ -64,6 +64,7 @@
                                 <li class="list-group-item">
                                     <div class="btn-group text-center">
                                         {% if user.is_superuser or can_change_mailing or mailing.user == request.user or can_switch_mailing %}
+                                            <a href="{% url 'main:try_mailing' mailing.pk %}" class="btn btn-primary my-2">Попытки</a>
                                             <a href="{% url 'main:mailing_update' mailing.pk %}" class="btn btn-primary my-2">Изменить</a>
                                         {% else %}
                                             <h6 class="text-secondary">У вас нет права редактировать или удалять
